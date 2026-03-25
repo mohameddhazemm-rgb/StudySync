@@ -9,9 +9,12 @@ set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
-qt_add_executable(StudyPlanner
-        src/main.cpp
+file(GLOB_RECURSE PROJECT_SOURCES
+        "src/*.cpp"
+        "include/*.h"
 )
+
+add_executable(StudyPlanner ${PROJECT_SOURCES})
 
 target_include_directories(StudyPlanner PRIVATE include src)
 target_link_libraries(StudyPlanner PRIVATE Qt6::Widgets)
