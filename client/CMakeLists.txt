@@ -9,8 +9,10 @@ add_executable(studysync_client
         src/main.cpp
         src/MainWindow.cpp
         src/ClientNetworkManager.cpp
+        src/TcpClient.cpp
         include/MainWindow.h
         include/ClientNetworkManager.h
+        include/TcpClient.h
 )
 
 target_link_libraries(studysync_client PRIVATE
