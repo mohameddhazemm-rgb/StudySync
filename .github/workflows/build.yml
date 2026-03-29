@@ -22,8 +22,10 @@ jobs:
     - name: Build Project
       run: cmake --build build
 
-    - name: Upload Binary
+    - name: Upload Binaries
       uses: actions/upload-artifact@v4
       with:
         name: StudyPlanner-Binary
-        path: build/StudyPlanner
+        path: |
+          build/client/studysync_client
+          build/server/studysync_server
