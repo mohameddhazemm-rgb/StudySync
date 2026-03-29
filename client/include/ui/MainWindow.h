@@ -21,6 +21,7 @@ private:
 
     QWidget* sidebar;
     QPushButton* btnDashboard;
+    QPushButton* createTaskBtn;
     QPushButton* btnFocus;
     QPushButton* btnGroups;
     QPushButton* btnAiTutor;
@@ -48,4 +49,6 @@ private slots:
     void openGroupTasks(int groupId);
     void startFocusFromDashboard();
     void navigateBackToGroups();
+    void openCreateTaskDialog();
+    void handleNewTask(Task task);
 };

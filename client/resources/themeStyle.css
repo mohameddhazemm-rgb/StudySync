@@ -20,6 +20,10 @@ QLabel#senderNameLabel {
     font-size: 10px;
 }
 
+QLabel {
+    color: #ffffff;
+}
+
 /*MAIN*/
 QMainWindow,
 QDockWidget {

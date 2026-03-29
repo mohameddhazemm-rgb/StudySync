@@ -5,6 +5,7 @@
 #include <QFile>
 
 #include "ui/ClientState.h"
+#include "ui/widget/CreateTaskDialog.h"
 
 void MainWindow::loadStylesheet(QApplication &app) {
     QFile styleFile(":/resources/themeStyle.css");
@@ -114,12 +115,14 @@ void MainWindow::setupTopbar() {
 
     layout->addWidget(topbarTitle);
     layout->addStretch();
-    layout->addWidget(new QPushButton("Create Task", this));
+    createTaskBtn = new QPushButton("Create Task", this);
+    layout->addWidget(createTaskBtn);
     layout->addWidget(new QPushButton("Notifications", this));
     layout->addWidget(new QLabel(ClientState::getUser()->getUsername().c_str(), this));
 }
 
 void MainWindow::connectSignals() {
+    connect(createTaskBtn, &QPushButton::clicked, this, &MainWindow::openCreateTaskDialog);
     connect(btnDashboard, &QPushButton::clicked, this, &MainWindow::switchPage);
     connect(btnFocus, &QPushButton::clicked, this, &MainWindow::switchPage);
     connect(btnGroups, &QPushButton::clicked, this, &MainWindow::switchPage);
@@ -193,4 +196,19 @@ void MainWindow::startFocusFromDashboard() {
 void MainWindow::navigateBackToGroups() {
     btnGroups->setChecked(true);
     switchPage();
+}
+
+
+void MainWindow::openCreateTaskDialog() {
+    CreateTaskDialog* dialog = new CreateTaskDialog(this);
+
+    connect(dialog, &CreateTaskDialog::taskCreated,
+            this, &MainWindow::handleNewTask);
+
+    dialog->exec();
+}
+
+void MainWindow::handleNewTask(Task task) {
+    std::cout << "New Task Created: " << task.getTitle() << std::endl;
+    ClientState::mockCreateTask(task.getGroupId(), task.getTitle(), task.getTag(), task.getAssignedToId());
 }
