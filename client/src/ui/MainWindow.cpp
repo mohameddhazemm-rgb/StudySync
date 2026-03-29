@@ -2,6 +2,7 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setupUi();
+    connectSignals();
 }
 
 void MainWindow::setupUi() {
@@ -22,8 +23,24 @@ void MainWindow::setupUi() {
 
     setupTopbar();
 
+    stackedWidget = new QStackedWidget(this);
+
+    pageDashboard = new DashboardPage(this);
+    pageFocus = new FocusPage(this);
+    pageGroups = new GroupsPage(this);
+    pageAiTutor = new AiTutorPage(this);
+    pageGroupChat = new GroupChatPage(this);
+    pageTasks = new TasksPage(this);
+
+    stackedWidget->addWidget(pageDashboard);
+    stackedWidget->addWidget(pageFocus);
+    stackedWidget->addWidget(pageGroups);
+    stackedWidget->addWidget(pageAiTutor);
+    stackedWidget->addWidget(pageGroupChat);
+    stackedWidget->addWidget(pageTasks);
+
     rightSideLayout->addWidget(topbar);
-    rightSideLayout->addStretch();
+    rightSideLayout->addWidget(stackedWidget);
 
     mainLayout->addWidget(sidebar);
     mainLayout->addWidget(rightSideContainer);
@@ -84,4 +101,38 @@ void MainWindow::setupTopbar() {
     layout->addWidget(new QPushButton("Create Task", this));
     layout->addWidget(new QPushButton("Notifications", this));
     layout->addWidget(new QLabel(ClientState::getUser()->getUsername().c_str(), this));
+}
+
+void MainWindow::connectSignals() {
+    connect(btnDashboard, &QPushButton::clicked, this, &MainWindow::switchPage);
+    connect(btnFocus, &QPushButton::clicked, this, &MainWindow::switchPage);
+    connect(btnGroups, &QPushButton::clicked, this, &MainWindow::switchPage);
+    connect(btnAiTutor, &QPushButton::clicked, this, &MainWindow::switchPage);
+}
+
+void MainWindow::switchPage() {
+    QPushButton* clickedBtn = qobject_cast<QPushButton*>(sender());
+    if (!clickedBtn) return;
+
+    btnDashboard->setChecked(false);
+    btnFocus->setChecked(false);
+    btnGroups->setChecked(false);
+    btnAiTutor->setChecked(false);
+
+    clickedBtn->setChecked(true);
+    pageDashboard->refreshPinnedGroups();
+
+    if (clickedBtn == btnDashboard) {
+        stackedWidget->setCurrentIndex(0);
+        topbarTitle->setText("Dashboard");
+    } else if (clickedBtn == btnFocus) {
+        stackedWidget->setCurrentIndex(1);
+        topbarTitle->setText("Focus Session");
+    } else if (clickedBtn == btnGroups) {
+        stackedWidget->setCurrentIndex(2);
+        topbarTitle->setText("Study Groups");
+    } else if (clickedBtn == btnAiTutor) {
+        stackedWidget->setCurrentIndex(3);
+        topbarTitle->setText("AI Tutor");
+    }
 }
