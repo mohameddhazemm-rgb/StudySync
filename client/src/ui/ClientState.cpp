@@ -97,17 +97,9 @@ void ClientState::mockCreateGroup(const std::string& groupName) {
 void ClientState::mockCreateTask(int groupId, const std::string& title, const std::string& category, int assigneeId) {
     if (!currentUser) return;
 
-    // 1. Generate a new Task ID (start at 200 if empty, otherwise increment the last ID)
     int newId = tasks.empty() ? 200 : tasks.back().getId() + 1;
-
-    // 2. Create the new Task
-    // Constructor: Task(id, title, category, isCompleted, authorId, assigneeId, groupId)
     Task newTask(newId, title, category, false, currentUser->getId(), assigneeId, groupId);
-
-    // 3. Add it to the global tasks list
     tasks.push_back(newTask);
-
-    // 4. Link the task to the correct StudyGroup
     for (auto& group : studyGroups) {
         if (group.getId() == groupId) {
             group.addTaskId(newId);

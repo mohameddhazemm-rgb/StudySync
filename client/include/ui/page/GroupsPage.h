@@ -12,5 +12,5 @@ public:
     GroupsPage(QWidget* parent = nullptr);
     signals:
         void openGroupChatRequested(int groupId);
-    void openGroupTasksRequested(int groupId); // New signal
+    void openGroupTasksRequested(int groupId);
 };

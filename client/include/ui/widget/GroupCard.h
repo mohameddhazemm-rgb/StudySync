@@ -14,7 +14,7 @@ class GroupCard : public QFrame {
 public:
     GroupCard(const StudyGroup& group, bool isPinned, QWidget* parent = nullptr);
 signals:
-    void openChatRequested(int groupId);  // Now passes the ID
+    void openChatRequested(int groupId);
     void pinStateChanged();
-    void openTasksRequested(int groupId); // New signal for tasks
+    void openTasksRequested(int groupId);
 };

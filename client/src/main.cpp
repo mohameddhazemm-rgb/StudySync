@@ -9,6 +9,7 @@ int main(int argc, char* argv[]) {
     ClientNetworkManager api("127.0.0.1", "8080");
     ClientState::initDummyData();
     QApplication app(argc, argv);
+    MainWindow::loadStylesheet(app);
     MainWindow w;
     w.show();
 

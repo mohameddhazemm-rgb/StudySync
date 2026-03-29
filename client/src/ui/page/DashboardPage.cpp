@@ -12,7 +12,6 @@ DashboardPage::DashboardPage(QWidget* parent) : QWidget(parent) {
     QHBoxLayout* layout = new QHBoxLayout(this);
     layout->setContentsMargins(10, 10, 10, 10);
 
-    // Left Column
     QWidget* leftCol = new QWidget();
     QVBoxLayout* leftLayout = new QVBoxLayout(leftCol);
     leftLayout->setContentsMargins(0, 0, 0, 0);
@@ -20,7 +19,6 @@ DashboardPage::DashboardPage(QWidget* parent) : QWidget(parent) {
     QGroupBox* welcomeGroup = new QGroupBox("Welcome");
     QVBoxLayout* wLayout = new QVBoxLayout(welcomeGroup);
 
-    // Personalize the welcome text using ClientState
     const User* user = ClientState::getUser();
     QString username = user ? QString::fromStdString(user->getUsername()) : "Student";
     QLabel* wSub = new QLabel("Welcome back, " + username + "!\nYou have tasks pending.");
@@ -33,7 +31,6 @@ DashboardPage::DashboardPage(QWidget* parent) : QWidget(parent) {
     QGroupBox* tasksGroup = new QGroupBox("Tasks Due Today");
     QVBoxLayout* tLayout = new QVBoxLayout(tasksGroup);
 
-    // Fetch and render tasks dynamically using ClientState
     const std::vector<Task>& allTasks = ClientState::getTasks();
     for (const Task& task : allTasks) {
         QString groupName = "Personal";
@@ -41,8 +38,6 @@ DashboardPage::DashboardPage(QWidget* parent) : QWidget(parent) {
         if (group) {
             groupName = QString::fromStdString(group->getName());
         }
-
-        // Pass both the task and the groupName to fix the compile error
         tLayout->addWidget(new TaskCard(task, groupName));
     }
     tLayout->addStretch();
@@ -50,16 +45,13 @@ DashboardPage::DashboardPage(QWidget* parent) : QWidget(parent) {
     leftLayout->addWidget(welcomeGroup);
     leftLayout->addWidget(tasksGroup);
 
-    // Right Column
     QGroupBox* rightCol = new QGroupBox("Pinned Groups");
     pinnedGroupsLayout = new QVBoxLayout(rightCol);
     refreshPinnedGroups();
 
-    // Add columns to main layout
     layout->addWidget(leftCol);
     layout->addWidget(rightCol);
 
-    // Optional: Make the left column take slightly more space
     layout->setStretch(0, 2);
     layout->setStretch(1, 1);
 }

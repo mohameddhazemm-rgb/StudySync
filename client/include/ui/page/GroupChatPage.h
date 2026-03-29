@@ -11,8 +11,6 @@ class GroupChatPage : public QWidget {
     Q_OBJECT
 public:
     GroupChatPage(QWidget* parent = nullptr);
-
-    // Call this to dynamically load the chat history
     void loadChat(int groupId);
 
     signals:

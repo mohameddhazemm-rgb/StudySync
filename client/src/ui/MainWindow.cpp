@@ -1,5 +1,21 @@
 #include "ui/MainWindow.h"
 
+#include <iostream>
+#include <QApplication>
+#include <QFile>
+
+#include "ui/ClientState.h"
+
+void MainWindow::loadStylesheet(QApplication &app) {
+    QFile styleFile(":/resources/themeStyle.css");
+    if (styleFile.open(QFile::ReadOnly)) {
+        QString styleSheet = QLatin1String(styleFile.readAll());
+        app.setStyleSheet(styleSheet);
+        styleFile.close();
+    } else {
+        std::cout << "couldnt load stylesheet" << std::endl;
+    }
+}
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setupUi();
     connectSignals();

@@ -18,5 +18,5 @@ private:
 signals:
     void startFocusRequested();
     void openGroupChatRequested(int groupId);
-    void openGroupTasksRequested(int groupId); // Added signal for tasks
+    void openGroupTasksRequested(int groupId);
 };

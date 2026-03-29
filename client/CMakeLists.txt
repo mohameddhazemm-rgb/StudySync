@@ -5,14 +5,13 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Boost REQUIRED)
 
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
+file(GLOB_RECURSE HEADER_FILES include/*.h)
+
 add_executable(studysync_client
-        src/main.cpp
-        src/MainWindow.cpp
-        src/ClientNetworkManager.cpp
-        src/TcpClient.cpp
-        include/MainWindow.h
-        include/ClientNetworkManager.h
-        include/TcpClient.h
+        ${SRC_FILES}
+        ${HEADER_FILES}
+        resources.qrc
 )
 
 target_link_libraries(studysync_client PRIVATE

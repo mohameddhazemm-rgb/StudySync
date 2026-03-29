@@ -9,6 +9,5 @@
 class TaskCard : public QFrame {
     Q_OBJECT
 public:
-    // Added groupName parameter
     TaskCard(const Task& task, const QString& groupName, QWidget* parent = nullptr);
 };

@@ -6,7 +6,6 @@
 GroupChatPage::GroupChatPage(QWidget* parent) : QWidget(parent) {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
-    // Back button
     QPushButton* btnBack = new QPushButton("Back to Groups");
     connect(btnBack, &QPushButton::clicked, this, &GroupChatPage::backToGroupsRequested);
     mainLayout->addWidget(btnBack, 0, Qt::AlignLeft);

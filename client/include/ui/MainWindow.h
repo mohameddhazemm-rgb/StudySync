@@ -1,12 +1,6 @@
 #pragma once
-#include <QMainWindow>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QLabel>
-#include <QStackedWidget>
 #include "DataStructures.h"
-#include "ui/ClientState.h"
+#include "page/GroupsPage.h"
 
 #include "ui/page/DashboardPage.h"
 #include "ui/page/TasksPage.h"
@@ -18,6 +12,7 @@
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
+    static void loadStylesheet(QApplication &app);
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow() = default;
 private:

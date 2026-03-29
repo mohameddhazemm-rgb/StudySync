@@ -26,10 +26,7 @@ GroupCard::GroupCard(const StudyGroup& group, bool isPinned, QWidget* parent) : 
     btnPin->setCursor(Qt::PointingHandCursor);
 
     connect(btnPin, &QPushButton::clicked, this, [this, btnPin, id = group.getId()]() {
-            // 1. Send the fake network request to toggle the pin
         ClientState::mockTogglePinGroup(id);
-
-        // 2. Update the button text immediately to reflect the new state
         bool currentlyPinned = ClientState::isGroupPinned(id);
         btnPin->setText(currentlyPinned ? "Pinned" : "Pin");
         emit pinStateChanged();
@@ -43,11 +40,9 @@ GroupCard::GroupCard(const StudyGroup& group, bool isPinned, QWidget* parent) : 
     QLabel* members = new QLabel(QString::number(memberCount) + " members");
     members->setObjectName("members");
 
-    // Create the two buttons
     QPushButton* btnChat = new QPushButton("Open Chat");
     QPushButton* btnTasks = new QPushButton("Open Tasks");
 
-    // Pass the group ID when clicked
     connect(btnChat, &QPushButton::clicked, this, [this, id = group.getId()]() {
         emit openChatRequested(id);
     });
@@ -61,5 +56,5 @@ GroupCard::GroupCard(const StudyGroup& group, bool isPinned, QWidget* parent) : 
 
     layout->addLayout(headerLayout);
     layout->addWidget(members);
-    layout->addLayout(actionsLayout); // Add the buttons side-by-side
+    layout->addLayout(actionsLayout);
 }

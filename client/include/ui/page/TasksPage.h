@@ -9,13 +9,10 @@ class TasksPage : public QWidget {
     Q_OBJECT
 public:
     TasksPage(QWidget* parent = nullptr);
-
-    // Call this to load a specific group's tasks dynamically
     void loadTasks(int groupId);
 
-    signals:
-        void backToGroupsRequested(); // Signal to return to GroupsPage
-
+signals:
+    void backToGroupsRequested();
 private:
     QVBoxLayout* tasksLayout;
     QGroupBox* group;
