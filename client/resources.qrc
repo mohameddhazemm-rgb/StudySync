@@ -2,47 +2,45 @@
 <RCC version="1.0">
     <qresource prefix="/">
         <file>resources/themeStyle.css</file>
-    </qresource>
-    <qresource prefix="theme">
-        <file alias="CheckBox.png">resources/icons/CheckBox.png</file>
-        <file alias="CheckBoxDisabled.png">resources/icons/CheckBoxDisabled.png</file>
-        <file alias="CheckBoxInterminate.png">resources/icons/CheckBoxInterminate.png</file>
-        <file alias="CheckBoxInterminateDisabled.png">resources/icons/CheckBoxInterminateDisabled.png</file>
-        <file alias="CheckBoxInterminatePressed.png">resources/icons/CheckBoxInterminatePressed.png</file>
-        <file alias="CheckBoxPressed.png">resources/icons/CheckBoxPressed.png</file>
-        <file alias="ComboBox.png">resources/icons/ComboBox.png</file>
-        <file alias="ComboBoxDisabled.png">resources/icons/ComboBoxDisabled.png</file>
-        <file alias="NextMonth.png">resources/icons/NextMonth.png</file>
-        <file alias="NextMonthDisabled.png">resources/icons/NextMonthDisabled.png</file>
-        <file alias="PrevMonth.png">resources/icons/PrevMonth.png</file>
-        <file alias="PrevMonthDisabled.png">resources/icons/PrevMonthDisabled.png</file>
-        <file alias="RadioButton.png">resources/icons/RadioButton.png</file>
-        <file alias="RadioButtonHover.png">resources/icons/RadioButtonHover.png</file>
-        <file alias="RadioButtonPressed.png">resources/icons/RadioButtonPressed.png</file>
-        <file alias="ScrollBottom.png">resources/icons/ScrollBottom.png</file>
-        <file alias="ScrollBottomHover.png">resources/icons/ScrollBottomHover.png</file>
-        <file alias="ScrollBottomPressed.png">resources/icons/ScrollBottomPressed.png</file>
-        <file alias="ScrollLeft.png">resources/icons/ScrollLeft.png</file>
-        <file alias="ScrollLeftHover.png">resources/icons/ScrollLeftHover.png</file>
-        <file alias="ScrollLeftPressed.png">resources/icons/ScrollLeftPressed.png</file>
-        <file alias="ScrollRight.png">resources/icons/ScrollRight.png</file>
-        <file alias="ScrollRightHover.png">resources/icons/ScrollRightHover.png</file>
-        <file alias="ScrollRightPressed.png">resources/icons/ScrollRightPressed.png</file>
-        <file alias="ScrollTop.png">resources/icons/ScrollTop.png</file>
-        <file alias="ScrollTopHover.png">resources/icons/ScrollTopHover.png</file>
-        <file alias="ScrollTopPressed.png">resources/icons/ScrollTopPressed.png</file>
-        <file alias="SpinBoxDown.png">resources/icons/SpinBoxDown.png</file>
-        <file alias="SpinBoxDownDisabled.png">resources/icons/SpinBoxDownDisabled.png</file>
-        <file alias="SpinBoxUp.png">resources/icons/SpinBoxUp.png</file>
-        <file alias="SpinBoxUpDisabled.png">resources/icons/SpinBoxUpDisabled.png</file>
-        <file alias="ToggleSwitchDisabled.png">resources/icons/ToggleSwitchDisabled.png</file>
-        <file alias="ToggleSwitchOff.png">resources/icons/ToggleSwitchOff.png</file>
-        <file alias="ToggleSwitchOffHover.png">resources/icons/ToggleSwitchOffHover.png</file>
-        <file alias="ToggleSwitchOffPressed.png">resources/icons/ToggleSwitchOffPressed.png</file>
-        <file alias="ToggleSwitchOn.png">resources/icons/ToggleSwitchOn.png</file>
-        <file alias="ToggleSwitchOnHover.png">resources/icons/ToggleSwitchOnHover.png</file>
-        <file alias="ToggleSwitchOnPressed.png">resources/icons/ToggleSwitchOnPressed.png</file>
-        <file alias="TreeViewClose.png">resources/icons/TreeViewClose.png</file>
-        <file alias="TreeViewOpen.png">resources/icons/TreeViewOpen.png</file>
+        <file>resources/icons/CheckBox.png</file>
+        <file>resources/icons/CheckBoxDisabled.png</file>
+        <file>resources/icons/CheckBoxInterminate.png</file>
+        <file>resources/icons/CheckBoxInterminateDisabled.png</file>
+        <file>resources/icons/CheckBoxInterminatePressed.png</file>
+        <file>resources/icons/CheckBoxPressed.png</file>
+        <file>resources/icons/ComboBox.png</file>
+        <file>resources/icons/ComboBoxDisabled.png</file>
+        <file>resources/icons/NextMonth.png</file>
+        <file>resources/icons/NextMonthDisabled.png</file>
+        <file>resources/icons/PrevMonth.png</file>
+        <file>resources/icons/PrevMonthDisabled.png</file>
+        <file>resources/icons/RadioButton.png</file>
+        <file>resources/icons/RadioButtonHover.png</file>
+        <file>resources/icons/RadioButtonPressed.png</file>
+        <file>resources/icons/ScrollBottom.png</file>
+        <file>resources/icons/ScrollBottomHover.png</file>
+        <file>resources/icons/ScrollBottomPressed.png</file>
+        <file>resources/icons/ScrollLeft.png</file>
+        <file>resources/icons/ScrollLeftHover.png</file>
+        <file>resources/icons/ScrollLeftPressed.png</file>
+        <file>resources/icons/ScrollRight.png</file>
+        <file>resources/icons/ScrollRightHover.png</file>
+        <file>resources/icons/ScrollRightPressed.png</file>
+        <file>resources/icons/ScrollTop.png</file>
+        <file>resources/icons/ScrollTopHover.png</file>
+        <file>resources/icons/ScrollTopPressed.png</file>
+        <file>resources/icons/SpinBoxDown.png</file>
+        <file>resources/icons/SpinBoxDownDisabled.png</file>
+        <file>resources/icons/SpinBoxUp.png</file>
+        <file>resources/icons/SpinBoxUpDisabled.png</file>
+        <file>resources/icons/ToggleSwitchDisabled.png</file>
+        <file>resources/icons/ToggleSwitchOff.png</file>
+        <file>resources/icons/ToggleSwitchOffHover.png</file>
+        <file>resources/icons/ToggleSwitchOffPressed.png</file>
+        <file>resources/icons/ToggleSwitchOn.png</file>
+        <file>resources/icons/ToggleSwitchOnHover.png</file>
+        <file>resources/icons/ToggleSwitchOnPressed.png</file>
+        <file>resources/icons/TreeViewClose.png</file>
+        <file>resources/icons/TreeViewOpen.png</file>
     </qresource>
 </RCC>
