@@ -23,6 +23,7 @@ public:
     FocusPage(QWidget* parent = nullptr);
     void startFocusTimer();
     void resetFocusTimer();
+    void refreshGroupList();
 
 private slots:
     void updateTimer();
@@ -32,7 +33,6 @@ private slots:
 
 private:
     void refreshTimerLabel();
-    void refreshGroupList();
 
     QTimer* timer;
     QLabel* timerLabel;
