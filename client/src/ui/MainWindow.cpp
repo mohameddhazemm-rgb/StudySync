@@ -134,6 +134,7 @@ void MainWindow::connectSignals() {
     connect(pageGroups, &GroupsPage::openGroupTasksRequested, this, &MainWindow::openGroupTasks);
     connect(pageGroups, &GroupsPage::openGroupChatRequested, this, &MainWindow::openGroupChat);
     connect(pageGroupChat, &GroupChatPage::backToGroupsRequested, this, &MainWindow::navigateBackToGroups);
+    connect(pageTasks, &TasksPage::backToGroupsRequested, this, &MainWindow::navigateBackToGroups);
 }
 
 void MainWindow::switchPage() {
@@ -197,8 +198,13 @@ void MainWindow::startFocusFromDashboard() {
 }
 
 void MainWindow::navigateBackToGroups() {
+    btnDashboard->setChecked(false);
+    btnFocus->setChecked(false);
     btnGroups->setChecked(true);
-    switchPage();
+    btnAiTutor->setChecked(false);
+    stackedWidget->setCurrentIndex(2);
+    topbarTitle->setText(LanguageManager::tr("nav.study_groups"));
+    pageDashboard->refreshPinnedGroups();
 }
 
 
