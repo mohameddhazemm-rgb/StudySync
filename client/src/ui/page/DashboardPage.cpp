@@ -1,7 +1,7 @@
 #include "ui/page/DashboardPage.h"
 #include "ui/widget/TaskCard.h"
 #include "ui/widget/GroupCard.h"
-#include "ui/ClientState.h" // Ensure ClientState is included
+#include "ui/ClientState.h"
 #include <iostream>
 #include <QApplication>
 #include <QFile>

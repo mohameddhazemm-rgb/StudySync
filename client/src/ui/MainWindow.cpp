@@ -128,7 +128,7 @@ void MainWindow::connectSignals() {
     connect(btnFocus, &QPushButton::clicked, this, &MainWindow::switchPage);
     connect(btnGroups, &QPushButton::clicked, this, &MainWindow::switchPage);
     connect(btnAiTutor, &QPushButton::clicked, this, &MainWindow::switchPage);
-
+    connect(pageDashboard, &DashboardPage::startFocusRequested, this, &MainWindow::startFocusFromDashboard);
     connect(pageDashboard, &DashboardPage::openGroupChatRequested, this, &MainWindow::openGroupChat);
     connect(pageDashboard, &DashboardPage::openGroupTasksRequested, this, &MainWindow::openGroupTasks);
     connect(pageGroups, &GroupsPage::openGroupTasksRequested, this, &MainWindow::openGroupTasks);

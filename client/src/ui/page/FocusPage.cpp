@@ -85,7 +85,15 @@ void FocusPage::updateTimer() {
 }
 
 void FocusPage::startTimer() {
+    if (groupSelect->currentIndex() == 0) return;
     if (!timer->isActive()) {
+        if (remainingSeconds == DefaultFocusDurationSeconds) {
+            int groupId = groupSelect->currentData().toInt();
+            int minutes = DefaultFocusDurationSeconds / 60;
+            std::string announceMsg = "I just started a focus session for " + std::to_string(minutes) + " minutes!";
+            ClientState::mockSendMessage(groupId, announceMsg);
+        }
+
         timer->start(1000);
         startButton->setEnabled(false);
         pauseButton->setEnabled(true);

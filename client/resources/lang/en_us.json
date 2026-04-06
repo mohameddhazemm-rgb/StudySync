@@ -39,6 +39,7 @@
   "group.open_chat": "Open Chat",
   "group.open_tasks": "Open Tasks",
   "focus.timer_title": "Pomodoro Timer",
+  "focus.group_placeholder": "Select a Group",
   "focus.start": "Start",
   "focus.pause": "Pause",
   "focus.reset": "Reset",
