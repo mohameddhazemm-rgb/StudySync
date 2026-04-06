@@ -192,6 +192,8 @@ void MainWindow::startFocusFromDashboard() {
     btnFocus->setChecked(true);
     stackedWidget->setCurrentIndex(1);
     topbarTitle->setText(LanguageManager::tr("nav.focus_session"));
+    pageFocus->resetFocusTimer();
+    pageFocus->startFocusTimer();
 }
 
 void MainWindow::navigateBackToGroups() {

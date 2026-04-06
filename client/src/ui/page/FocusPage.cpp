@@ -95,3 +95,11 @@ void FocusPage::resetTimer() {
     startButton->setEnabled(true);
     pauseButton->setEnabled(false);
 }
+
+void FocusPage::startFocusTimer() {
+    startTimer();
+}
+
+void FocusPage::resetFocusTimer() {
+    resetTimer();
+}

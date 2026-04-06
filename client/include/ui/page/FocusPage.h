@@ -21,6 +21,8 @@ class FocusPage : public QWidget {
     Q_OBJECT
 public:
     FocusPage(QWidget* parent = nullptr);
+    void startFocusTimer();
+    void resetFocusTimer();
 
 private slots:
     void updateTimer();
