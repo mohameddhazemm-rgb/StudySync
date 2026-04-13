@@ -400,6 +400,32 @@ bool Database::validateLogin(const std::string& username, const std::string& pas
     return isValid;
 }
 
+std::vector<int> Database::getUsersInGroup(int groupId) {
+    std::vector<int> users;
+    std::lock_guard<std::mutex> lock(dbMutex);
+    sqlite3_stmt* stmt;
+
+    if (sqlite3_prepare_v2(db, "SELECT user_id FROM GroupMembers WHERE group_id = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_int(stmt, 1, groupId);
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            users.push_back(sqlite3_column_int(stmt, 0));
+        }
+    }
+    sqlite3_finalize(stmt);
+
+    if (sqlite3_prepare_v2(db, "SELECT user_id FROM GroupInvites WHERE group_id = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_int(stmt, 1, groupId);
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            int uid = sqlite3_column_int(stmt, 0);
+            if (std::find(users.begin(), users.end(), uid) == users.end()) {
+                users.push_back(uid);
+            }
+        }
+    }
+    sqlite3_finalize(stmt);
+    return users;
+}
+
 LoginPayload Database::getFullUserData(int userId, const std::string& sessionToken) {
     std::lock_guard<std::mutex> lock(dbMutex);
     sqlite3_stmt* stmt;

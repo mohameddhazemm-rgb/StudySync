@@ -4,6 +4,8 @@
 #include <istream>
 #include <boost/json/src.hpp>
 
+#include "ConnectionManager.h"
+
 TcpConnection::pointer TcpConnection::create(boost::asio::io_context& ioContext) {
     return pointer(new TcpConnection(ioContext));
 }
@@ -28,9 +30,12 @@ void TcpConnection::doRead() {
                 std::string message;
                 std::getline(is, message);
                 handleMessage(message);
-                doRead(); // loop back
+                doRead();
             } else {
                 std::cout << "client disconnected: " << ec.message() << std::endl;
+                if (this->userId != -1) {
+                    ConnectionManager::getInstance().removeConnection(this->userId);
+                }
             }
         });
 }
@@ -53,13 +58,19 @@ void TcpConnection::handleMessage(const std::string& msg) {
             response["message"] = "Unknown command";
         }
 
+        if (cmd == "login" && response.contains("status") && response.at("status").as_string() == "success") {
+            if (response.contains("userId")) { // We'll add this to the login route next
+                this->userId = response.at("userId").as_int64();
+                ConnectionManager::getInstance().addConnection(this->userId, shared_from_this());
+            }
+        }
+
         send(boost::json::serialize(response));
 
     } catch (const std::exception& e) {
         std::cerr << "error parsing the json " << e.what() << std::endl;
     }
 }
-
 void TcpConnection::send(const std::string& message) {
     std::string formatted_msg = message;
     if (formatted_msg.back() != '\n') formatted_msg += '\n';

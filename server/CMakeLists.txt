@@ -7,6 +7,8 @@ file(GLOB_RECURSE HEADER_FILES include/*.h)
 add_executable(studysync_server
         ${SRC_FILES}
         ${HEADER_FILES}
+        src/ConnectionManager.cpp
+        src/ConnectionManager.h
 )
 
 target_link_libraries(studysync_server PRIVATE studysync_shared)

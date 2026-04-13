@@ -12,6 +12,7 @@
 using boost::asio::ip::tcp;
 class TcpConnection : public std::enable_shared_from_this<TcpConnection> {
 public:
+    int userId = -1;
     using pointer = std::shared_ptr<TcpConnection>;
 
     static pointer create(boost::asio::io_context& ioContext);

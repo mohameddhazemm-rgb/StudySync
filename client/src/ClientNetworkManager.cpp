@@ -1,5 +1,7 @@
 #include "ClientNetworkManager.h"
 #include <iostream>
+
+#include "ui/ClientState.h"
 #include "ui/MainWindow.h"
 ClientNetworkManager::ClientNetworkManager(const std::string& host, const std::string& port)
     : tcpClient(host, port,
@@ -15,6 +17,25 @@ void ClientNetworkManager::onMessageReceived(const std::string& message) {
     try {
         boost::json::value parsed = boost::json::parse(message);
         boost::json::object obj = parsed.as_object();
+
+        if (obj.contains("cmd") && obj.at("cmd").as_string() == "server_push_update") {
+            if (obj.contains("payload")) {
+                try {
+                    LoginPayload payload = LoginPayload::fromJson(obj.at("payload").as_object());
+                    ClientState::loadFromPayload(payload);
+
+                    if (ClientNotifier::instance()) {
+                        emit ClientNotifier::instance()->groupsChanged();
+                        emit ClientNotifier::instance()->tasksChanged();
+                        emit ClientNotifier::instance()->invitesChanged();
+                    }
+                } catch (const std::exception& e) {
+                    std::cerr << "Failed to load push update payload: " << e.what() << std::endl;
+                }
+            }
+            return;
+        }
+
         if (obj.contains("req_id")) {
             int req_id = obj.at("req_id").as_int64();
             std::function<void(const boost::json::object&)> callback;

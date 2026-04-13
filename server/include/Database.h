@@ -39,6 +39,9 @@ public:
     void deleteUser(int userId);
 
     bool validateLogin(const std::string& username, const std::string& password, int& outUserId);
+
+    std::vector<int> getUsersInGroup(int groupId);
+
     void createTemplateForUser(int userId);
     LoginPayload getFullUserData(int userId, const std::string& sessionToken);
 private:

@@ -1,7 +1,30 @@
 #include "MessageRouter.h"
 #include "Database.h"
-#include <ctime>
 #include <string>
+#include "ConnectionManager.h"
+
+void pushUpdateToUser(int userId) {
+    auto conn = ConnectionManager::getInstance().getConnection(userId);
+    if (conn) {
+        std::string token = "session_" + std::to_string(userId) + "_" + std::to_string(time(0));
+        LoginPayload payload = Database::getInstance().getFullUserData(userId, token);
+
+        boost::json::object msg;
+        msg["cmd"] = "server_push_update";
+        msg["payload"] = payload.toJson();
+
+        conn->send(boost::json::serialize(msg));
+    }
+}
+
+void pushUpdateToGroup(int groupId, int excludeUserId = -1) {
+    std::vector<int> users = Database::getInstance().getUsersInGroup(groupId);
+    for (int uid : users) {
+        if (uid != excludeUserId) {
+            pushUpdateToUser(uid);
+        }
+    }
+}
 
 void registerServerRoutes() {
     auto& router = MessageRouter::getInstance();
@@ -43,6 +66,7 @@ void registerServerRoutes() {
 
         if (Database::getInstance().validateLogin(username, password, userId)) {
             res["status"] = "success";
+            res["userId"] = userId;
             std::string token = "session_" + std::to_string(userId) + "_" + std::to_string(time(0));
             LoginPayload payload = Database::getInstance().getFullUserData(userId, token);
             res["payload"] = payload.toJson();
@@ -66,6 +90,8 @@ void registerServerRoutes() {
         Database::getInstance().togglePinGroup(userId, groupId);
         res["status"] = "success";
         res["sync_counter"] = Database::getInstance().getSyncCounter();
+
+        pushUpdateToUser(userId);
     });
 
     router.registerRoute("createGroup", [](const boost::json::object& req, boost::json::object& res) {
@@ -85,9 +111,14 @@ void registerServerRoutes() {
 
     router.registerRoute("deleteGroup", [](const boost::json::object& req, boost::json::object& res) {
         int groupId = req.at("groupId").as_int64();
+        std::vector<int> usersToNotify = Database::getInstance().getUsersInGroup(groupId);
         Database::getInstance().deleteGroup(groupId);
         res["status"] = "success";
         res["sync_counter"] = Database::getInstance().getSyncCounter();
+
+        for (int uid : usersToNotify) {
+            pushUpdateToUser(uid);
+        }
     });
 
     router.registerRoute("createTask", [](const boost::json::object& req, boost::json::object& res) {
@@ -105,6 +136,8 @@ void registerServerRoutes() {
         } else {
             res["status"] = "error";
         }
+
+        pushUpdateToGroup(groupId, req.at("ownerId").as_int64());
     });
 
     router.registerRoute("toggleTaskCompletion", [](const boost::json::object& req, boost::json::object& res) {
@@ -139,6 +172,8 @@ void registerServerRoutes() {
         Database::getInstance().addMessage(groupId, userId, text);
         res["status"] = "success";
         res["sync_counter"] = Database::getInstance().getSyncCounter();
+
+        pushUpdateToGroup(groupId, userId);
     });
 
     router.registerRoute("getUsername", [](const boost::json::object& req, boost::json::object& res) {
@@ -169,6 +204,8 @@ void registerServerRoutes() {
                 res["status"] = "success";
                 res["userId"] = userId;
                 res["sync_counter"] = Database::getInstance().getSyncCounter();
+
+                pushUpdateToGroup(groupId);
             } else {
                 res["status"] = "error";
                 res["message"] = "User not found";
@@ -185,6 +222,9 @@ void registerServerRoutes() {
         Database::getInstance().removeMemberFromGroup(groupId, userId);
         res["status"] = "success";
         res["sync_counter"] = Database::getInstance().getSyncCounter();
+
+        pushUpdateToGroup(groupId);
+        pushUpdateToUser(userId);
     });
 
     router.registerRoute("inviteMemberToGroup", [](const boost::json::object& req, boost::json::object& res) {
@@ -201,6 +241,8 @@ void registerServerRoutes() {
             res["status"] = "error";
             res["message"] = "User not found.";
         }
+
+        pushUpdateToUser(userId);
     });
 
     router.registerRoute("cancelInvite", [](const boost::json::object& req, boost::json::object& res) {
@@ -209,6 +251,8 @@ void registerServerRoutes() {
         Database::getInstance().cancelInvite(groupId, userId);
         res["status"] = "success";
         res["sync_counter"] = Database::getInstance().getSyncCounter();
+
+        pushUpdateToUser(userId);
     });
 
     router.registerRoute("acceptInvite", [](const boost::json::object& req, boost::json::object& res) {
@@ -217,6 +261,8 @@ void registerServerRoutes() {
         Database::getInstance().acceptInvite(groupId, userId);
         res["status"] = "success";
         res["sync_counter"] = Database::getInstance().getSyncCounter();
+
+        pushUpdateToGroup(groupId);
     });
 
     router.registerRoute("denyInvite", [](const boost::json::object& req, boost::json::object& res) {
@@ -225,5 +271,7 @@ void registerServerRoutes() {
         Database::getInstance().denyInvite(groupId, userId);
         res["status"] = "success";
         res["sync_counter"] = Database::getInstance().getSyncCounter();
+
+        pushUpdateToUser(userId);
     });
 }
