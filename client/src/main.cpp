@@ -4,7 +4,8 @@
 #include "LanguageManager.h"
 #include "ui/ClientState.h"
 #include "ui/widget/LoginWindow.h"
-
+#include <QStyleHints>
+#include <QGuiApplication>
 
 int main(int argc, char* argv[]) {
     auto networkManager = std::make_shared<ClientNetworkManager>("127.0.0.1", "8080");
@@ -14,7 +15,7 @@ int main(int argc, char* argv[]) {
     LanguageManager::loadLanguage(":/resources/lang/en_us.json");
     QApplication app(argc, argv);
     MainWindow::loadStylesheet(app);
-
+    QGuiApplication::styleHints()->setColorScheme(Qt::ColorScheme::Dark);
     LoginWindow loginDialog(api);
     if (loginDialog.exec() == QDialog::Accepted) {
         MainWindow mainWindow;
