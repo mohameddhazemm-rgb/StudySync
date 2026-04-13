@@ -17,7 +17,6 @@ tcp::socket& TcpConnection::socket() {
 }
 
 void TcpConnection::start() {
-    std::cout << "client connected." << std::endl;
     doRead();
 }
 
@@ -91,7 +90,6 @@ void TcpConnection::doWrite() {
         boost::asio::buffer(writeQueue.front()),
         [this, self](const boost::system::error_code& ec, std::size_t /*length*/) {
             if (!ec) {
-                std::cout << "sent response to the client." << std::endl;
                 writeQueue.pop();
                 if (!writeQueue.empty()) doWrite();
             } else {
@@ -115,7 +113,6 @@ void TcpServer::startAccept() {
 
 void TcpServer::handleAccept(TcpConnection::pointer new_connection, const boost::system::error_code& error) {
     if (!error) {
-        std::cout << "client connected" << std::endl;
         new_connection->start();
     } else {
         std::cerr << "Accept error: " << error.message() << std::endl;

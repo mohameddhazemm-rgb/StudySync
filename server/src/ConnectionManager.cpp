@@ -15,6 +15,15 @@ void ConnectionManager::removeConnection(int userId) {
     connections_.erase(userId);
 }
 
+std::vector<int> ConnectionManager::getActiveUserIds() {
+    std::lock_guard<std::mutex> lock(mutex_);
+    std::vector<int> activeIds;
+    for (const auto& pair : connections_) {
+        activeIds.push_back(pair.first);
+    }
+    return activeIds;
+}
+
 std::shared_ptr<TcpConnection> ConnectionManager::getConnection(int userId) {
     std::lock_guard<std::mutex> lock(mutex_);
     auto it = connections_.find(userId);

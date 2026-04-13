@@ -68,13 +68,14 @@ void TcpClient::connect() {
         [this](const boost::system::error_code& ec, boost::asio::ip::tcp::resolver::results_type results) {
             if (!ec) {
                 boost::asio::async_connect(socket, results,
-                    [this](const boost::system::error_code& ec, const boost::asio::ip::tcp::endpoint& endpoint) {
+                    [this](const boost::system::error_code& ec, const boost::asio::ip::tcp::endpoint&) {
                         if (!ec) {
-                            std::cout << "connected successfully." << std::endl;
                             connected = true;
                             if (onConnect) onConnect();
                             doRead();
-                            if (!writeQueue.empty()) doWrite();
+                            if (!writeQueue.empty()) {
+                                doWrite();
+                            }
                         } else {
                             checkReconnect();
                         }
@@ -96,18 +97,19 @@ void TcpClient::checkReconnect() {
 }
 
 void TcpClient::doRead() {
-    // Read until a newline is found
     boost::asio::async_read_until(socket, readBuffer, '\n',
         [this](const boost::system::error_code& ec, std::size_t /*length*/) {
             if (!ec) {
                 std::istream is(&readBuffer);
                 std::string message;
-                std::getline(is, message); // extracts up to '\n'
-                
+                std::getline(is, message);
+
                 if (onMessage) onMessage(message);
-                
-                doRead(); // Queue the next read
+
+                doRead();
             } else {
+                if (ec == boost::asio::error::operation_aborted) return;
+
                 std::cerr << "client disconnected: " << ec.message() << std::endl;
                 checkReconnect();
             }
@@ -120,8 +122,10 @@ void TcpClient::doWrite() {
         [this](const boost::system::error_code& ec, std::size_t /*length*/) {
             if (!ec) {
                 writeQueue.pop();
-                if (!writeQueue.empty()) doWrite(); // write the next one
+                if (!writeQueue.empty()) doWrite();
             } else {
+                if (ec == boost::asio::error::operation_aborted) return;
+
                 checkReconnect();
             }
         });

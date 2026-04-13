@@ -10,6 +10,7 @@ public:
 
     void addConnection(int userId, std::shared_ptr<TcpConnection> conn);
     void removeConnection(int userId);
+    std::vector<int> getActiveUserIds();
     std::shared_ptr<TcpConnection> getConnection(int userId);
 
 private:

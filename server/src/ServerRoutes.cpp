@@ -2,6 +2,9 @@
 #include "Database.h"
 #include <string>
 #include "ConnectionManager.h"
+#include <boost/asio/steady_timer.hpp>
+#include <chrono>
+#include <memory>
 
 void pushUpdateToUser(int userId) {
     auto conn = ConnectionManager::getInstance().getConnection(userId);
@@ -24,6 +27,26 @@ void pushUpdateToGroup(int groupId, int excludeUserId = -1) {
             pushUpdateToUser(uid);
         }
     }
+}
+
+void pushUpdateToAll() {
+    std::vector<int> activeUsers = ConnectionManager::getInstance().getActiveUserIds();
+    for (int uid : activeUsers) {
+        pushUpdateToUser(uid);
+    }
+}
+
+void startAutoRefreshTimer(boost::asio::io_context& io_context) {
+    static std::shared_ptr<boost::asio::steady_timer> timer =
+        std::make_shared<boost::asio::steady_timer>(io_context, std::chrono::seconds(5));
+
+    timer->expires_after(std::chrono::seconds(5));
+    timer->async_wait([&io_context](const boost::system::error_code& ec) {
+        if (!ec) {
+            pushUpdateToAll();
+            startAutoRefreshTimer(io_context);
+        }
+    });
 }
 
 void registerServerRoutes() {
@@ -206,6 +229,7 @@ void registerServerRoutes() {
                 res["sync_counter"] = Database::getInstance().getSyncCounter();
 
                 pushUpdateToGroup(groupId);
+                pushUpdateToUser(userId);
             } else {
                 res["status"] = "error";
                 res["message"] = "User not found";
