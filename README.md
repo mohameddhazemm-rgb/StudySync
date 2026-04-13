@@ -25,6 +25,10 @@ StudySync is a tool built to help students manage their workload and collaborate
 * **C++**
 * **SQLite**
 
+## Project Board
+Track progress and planned features here:  
+https://trello.com/b/FurIPhe7/study-sync
+
 ## Credits & Acknowledgements
 * Initial SQLite database schema was generated using SQLAlchemy in python and then manually integrated into the C++ application.
 
