@@ -25,7 +25,7 @@ NotificationsDialog::NotificationsDialog(QWidget* parent) : QDialog(parent) {
     scroll->setWidget(container);
     scroll->setWidgetResizable(true);
     layout->addWidget(scroll);
-
+    connect(ClientNotifier::instance(), &ClientNotifier::groupsChanged, this, [this]() { refresh(); });
     refresh();
 }
 

@@ -45,6 +45,12 @@ DashboardPage::DashboardPage(QWidget* parent) : QWidget(parent) {
 
     layout->setStretch(0, 2);
     layout->setStretch(1, 1);
+    auto callback = [this]() {
+        refreshPinnedGroups();
+        refreshTaskCards();
+    };
+    connect(ClientNotifier::instance(), &ClientNotifier::groupsChanged, this, callback);
+    connect(ClientNotifier::instance(), &ClientNotifier::tasksChanged, this, callback);
 }
 
 void DashboardPage::refreshTaskCards() {
