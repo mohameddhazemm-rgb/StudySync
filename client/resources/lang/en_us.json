@@ -103,5 +103,6 @@
   "group.confirm_leave_title": "Leave Group",
   "group.confirm_remove_title": "Remove Member",
   "group.confirm_leave_msg": "Are you sure you want to leave this group?",
-  "group.confirm_remove_msg": "Are you sure you want to remove %1 from the group?"
+  "group.confirm_remove_msg": "Are you sure you want to remove %1 from the group?",
+  "auth.error.bad_email": "Invalid Email"
 }

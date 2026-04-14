@@ -5,6 +5,7 @@
 #include <boost/asio/steady_timer.hpp>
 #include <chrono>
 #include <memory>
+#include <regex>
 
 void pushUpdateToUser(int userId) {
     auto conn = ConnectionManager::getInstance().getConnection(userId);
@@ -69,7 +70,12 @@ void registerServerRoutes() {
         std::string username = req.at("username").as_string().c_str();
         std::string email = req.at("email").as_string().c_str();
         std::string password = req.at("password").as_string().c_str();
-
+        std::regex emailRegex(R"(.+@.+\..+)");
+        if (!std::regex_match(email, emailRegex)) {
+            res["status"] = "error";
+            res["message"] = "Invalid email format.";
+            return;
+        }
         int newId = Database::getInstance().createUser(username, email, password);
         if (newId != -1) {
             Database::getInstance().createTemplateForUser(newId);

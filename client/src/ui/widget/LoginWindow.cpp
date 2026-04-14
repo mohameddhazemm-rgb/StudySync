@@ -1,6 +1,7 @@
 #include "ui/widget/LoginWindow.h"
 #include "LanguageManager.h"
 #include <QMetaObject>
+#include <regex>
 
 LoginWindow::LoginWindow(std::shared_ptr<ServerAPI> api, QWidget *parent)
     : QDialog(parent), serverApi(api) {
@@ -144,6 +145,13 @@ void LoginWindow::handleRegistration() {
     if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
         statusLabel->setStyleSheet("color: red;");
         statusLabel->setText(LanguageManager::tr("auth.error.missing_fields"));
+        return;
+    }
+
+    std::regex emailRegex(R"(.+@.+\..+)");
+    if (!std::regex_match(email.toStdString(), emailRegex)) {
+        statusLabel->setStyleSheet("color: red;");
+        statusLabel->setText(LanguageManager::tr("auth.error.bad_email"));
         return;
     }
 

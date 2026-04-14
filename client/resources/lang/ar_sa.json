@@ -103,5 +103,6 @@
   "group.confirm_leave_title": "مغادرة المجموعة",
   "group.confirm_remove_title": "إزالة العضو",
   "group.confirm_leave_msg": "هل أنت متأكد أنك تريد مغادرة هذه المجموعة؟",
-  "group.confirm_remove_msg": "هل أنت متأكد أنك تريد إزالة %1 من المجموعة؟"
+  "group.confirm_remove_msg": "هل أنت متأكد أنك تريد إزالة %1 من المجموعة؟",
+  "auth.error.bad_email": "بريد إلكتروني غير صالح"
 }
