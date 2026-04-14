@@ -95,6 +95,10 @@ void LoginWindow::setupUi() {
     ipInput->setText(settings.value("ip", "127.0.0.1").toString());
     portInput->setText(settings.value("port", "8080").toString());
 
+    // fix bug on linux when using system light mode, using qt qss wiki as reference
+    tabWidget->setStyleSheet("QTabBar::tab { color: white; }");
+    rememberCheck->setStyleSheet("QCheckBox { color: white; }");
+
     connect(loginBtn, &QPushButton::clicked, this, &LoginWindow::handleLogin);
     connect(regBtn, &QPushButton::clicked, this, &LoginWindow::handleRegistration);
 }
