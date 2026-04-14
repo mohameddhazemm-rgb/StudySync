@@ -98,5 +98,10 @@
   "auth.status.connecting": "Connecting to server...",
   "auth.error.login_failed": "Login failed",
   "dialog.restart_title": "Restart Required",
-  "dialog.restart_msg": "Changing the language requires the application to restart. Do you want to restart now?"
+  "dialog.restart_msg": "Changing the language requires the application to restart. Do you want to restart now?",
+  "group.leave": "Leave",
+  "group.confirm_leave_title": "Leave Group",
+  "group.confirm_remove_title": "Remove Member",
+  "group.confirm_leave_msg": "Are you sure you want to leave this group?",
+  "group.confirm_remove_msg": "Are you sure you want to remove %1 from the group?"
 }

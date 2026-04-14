@@ -98,5 +98,10 @@
   "auth.status.connecting": "جاري الاتصال بالخادم...",
   "auth.error.login_failed": "فشل تسجيل الدخول",
   "dialog.restart_title": "إعادة التشغيل مطلوبة",
-  "dialog.restart_msg": "تغيير اللغة يتطلب إعادة تشغيل التطبيق. هل تريد إعادة التشغيل الآن؟"
+  "dialog.restart_msg": "تغيير اللغة يتطلب إعادة تشغيل التطبيق. هل تريد إعادة التشغيل الآن؟",
+  "group.leave": "مغادرة",
+  "group.confirm_leave_title": "مغادرة المجموعة",
+  "group.confirm_remove_title": "إزالة العضو",
+  "group.confirm_leave_msg": "هل أنت متأكد أنك تريد مغادرة هذه المجموعة؟",
+  "group.confirm_remove_msg": "هل أنت متأكد أنك تريد إزالة %1 من المجموعة؟"
 }

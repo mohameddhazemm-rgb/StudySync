@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QScrollArea>
+#include <QMessageBox>
 #include "ui/ClientState.h"
 #include "LanguageManager.h"
 
@@ -98,12 +99,24 @@ void ManageMembersDialog::refreshList() {
         QString name = QString::fromStdString(ClientState::getUsername(mId));
         bool isSelf = (currentUser && currentUser->getId() == mId);
 
-        QString btnText = isSelf ? "" : LanguageManager::tr("group.remove_member");
+        QString btnText = isSelf ? LanguageManager::tr("group.leave") : LanguageManager::tr("group.remove_member");
 
-        QWidget* row = createMemberRow(name, btnText, [this, mId]() {
-            ClientState::removeMemberFromGroup(groupId, mId);
-            refreshList();
-            emit membersUpdated();
+        QWidget* row = createMemberRow(name, btnText, [this, mId, isSelf, name]() {
+            QString confirmTitle = isSelf ? LanguageManager::tr("group.confirm_leave_title") : LanguageManager::tr("group.confirm_remove_title");
+            QString confirmMsg = isSelf
+                ? LanguageManager::tr("group.confirm_leave_msg")
+                : LanguageManager::tr("group.confirm_remove_msg").arg(name);
+
+            QMessageBox::StandardButton reply = QMessageBox::question(this, confirmTitle, confirmMsg, QMessageBox::Yes | QMessageBox::No);
+            if (reply == QMessageBox::Yes) {
+                ClientState::removeMemberFromGroup(groupId, mId);
+                if (isSelf) {
+                    this->close();
+                } else {
+                    refreshList();
+                    emit membersUpdated();
+                }
+            }
         });
         listLayout->addWidget(row);
     }

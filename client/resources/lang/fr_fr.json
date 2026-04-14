@@ -98,5 +98,10 @@
   "auth.status.connecting": "Connexion au serveur...",
   "auth.error.login_failed": "Échec de la connexion",
   "dialog.restart_title": "Redémarrage requis",
-  "dialog.restart_msg": "Changer la langue nécessite le redémarrage de l'application. Voulez-vous redémarrer maintenant ?"
+  "dialog.restart_msg": "Changer la langue nécessite le redémarrage de l'application. Voulez-vous redémarrer maintenant ?",
+  "group.leave": "Quitter",
+  "group.confirm_leave_title": "Quitter le groupe",
+  "group.confirm_remove_title": "Retirer le membre",
+  "group.confirm_leave_msg": "Êtes-vous sûr de vouloir quitter ce groupe ?",
+  "group.confirm_remove_msg": "Êtes-vous sûr de vouloir retirer %1 du groupe ?"
 }
